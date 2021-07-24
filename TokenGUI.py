@@ -4,6 +4,7 @@ import tkinter as tk
 token = None
 
 root = tk.Tk()
+root.config(width=15)
 # root.geometry("500x150")
 
 frame = tk.Frame(master=root, relief=tk.RAISED, borderwidth=1, bg="White")
@@ -30,17 +31,18 @@ text.pack(fill=tk.BOTH)
 
 
 def saveToken():
-    temp = text.get(0.0, tk.END)
-    temp = temp.strip("\n")
-    if str(temp).startswith("pk_"):
-        global token
-        token = temp
+    global token
+    token = text.get(0.0, tk.END)
+    token = token.replace("\n", "")
+    if str(token).startswith("pk_"):
 
-        js = {"Authorization": temp}
+        js = {"Authorization": token}
         with open("tk.json", "w") as file:
             json.dump(js, file)
 
+        print("Token Saved")
         label["text"] = "Zapisano Token"
+
         root.destroy()
         root.quit()
     else:
@@ -54,8 +56,3 @@ Button = tk.Button(
 
 def getToken():
     root.mainloop()
-    if token != None:
-        return token
-    else:
-        print("Brak tokenu")
-        exit()

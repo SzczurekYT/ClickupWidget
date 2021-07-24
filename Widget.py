@@ -1,7 +1,19 @@
+from pathlib import Path
 import tkinter as tk
 import json
 import ClickupRequest as CR
+from TokenGUI import getToken
 
+
+# Check if there is file containing Clickup API Token.
+# If it exists print to log that everything is fine.
+# Else show to user a GUI that will allow him to enter token.
+token_file = Path("tk.json")
+if token_file.is_file():
+    print("Token file exists!")
+else:
+    print("Token file not found, asking user to enter token.")
+    getToken()
 
 # Get tasks data
 tasks = CR.getData(True)
@@ -11,7 +23,7 @@ win = tk.Tk()
 win.attributes("-topmost", True)
 win.overrideredirect(True)
 
-
+# Try to open file with windows settings
 try:
     with open("window.json", "r") as file:
         locs = json.load(file)
@@ -20,6 +32,7 @@ try:
         height = locs["height"]
         width = locs["width"]
 
+# If it don't exist then use default settings
 except FileNotFoundError:
     ws = win.winfo_screenwidth()  # width of the screen
     hs = win.winfo_screenheight()  # height of the screen

@@ -1,7 +1,6 @@
 import requests as rq
 import json
 import datetime
-import TokenGUI as TG
 
 
 def getData(toVar):
@@ -11,7 +10,7 @@ def getData(toVar):
             headers = json.load(file)
     except FileNotFoundError:
         print("Token File not found?")
-        headers = {"Authorization": TG.getToken()}
+        exit()
 
     headers["Authorization"] = str(headers["Authorization"]).replace("\n", "")
     print("headers", headers)
