@@ -13,7 +13,6 @@ def getData(toVar):
         exit()
 
     headers["Authorization"] = str(headers["Authorization"]).replace("\n", "")
-    print("headers", headers)
 
     print("Getting all workspaces")
 
