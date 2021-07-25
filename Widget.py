@@ -3,17 +3,21 @@ import tkinter as tk
 import json
 import ClickupRequest as CR
 from TokenGUI import getToken
+from getpass import getuser
 
+user = getuser()
 
 # Check if there is file containing Clickup API Token.
 # If it exists print to log that everything is fine.
 # Else show to user a GUI that will allow him to enter token.
-token_file = Path("tk.json")
+token_file = Path(f"C:\\Users\\{user}\\AppData\\Local\\ClickupWidget\\tk.json")
 if token_file.is_file():
     print("Token file exists!")
 else:
     print("Token file not found, asking user to enter token.")
-    getToken()
+    if getToken() != True:
+        print("Error occured, no token, closing!")
+        exit()
 
 # Get tasks data
 tasks = CR.getData(True)
@@ -25,7 +29,9 @@ win.overrideredirect(True)
 
 # Try to open file with windows settings
 try:
-    with open("window.json", "r") as file:
+    with open(
+        f"C:\\Users\\{user}\\AppData\\Local\\ClickupWidget\\window.json", "r"
+    ) as file:
         locs = json.load(file)
         x = locs["x"]
         y = locs["y"]

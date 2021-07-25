@@ -1,9 +1,10 @@
+import getpass
 import json
 import tkinter as tk
+from getpass import getuser
 
 
 def getToken():
-    token = None
 
     root = tk.Tk()
     root.config(width=15)
@@ -31,18 +32,26 @@ def getToken():
     )
     text.pack(fill=tk.BOTH)
 
+    global succes
+    succes = False
+
     def saveToken():
         token = text.get(0.0, tk.END)
         token = token.replace("\n", "")
         if str(token).startswith("pk_"):
 
+            user = getuser()
             js = {"Authorization": token}
-            with open("tk.json", "w") as file:
+            with open(
+                f"C:\\Users\\{user}\\AppData\\Local\\ClickupWidget\\tk.json", "w"
+            ) as file:
                 json.dump(js, file)
 
             print("Token Saved")
             label["text"] = "Zapisano Token"
 
+            global succes
+            succes = True
             root.destroy()
             root.quit()
         else:
@@ -53,3 +62,4 @@ def getToken():
     ).pack(fill=tk.X)
 
     root.mainloop()
+    return succes

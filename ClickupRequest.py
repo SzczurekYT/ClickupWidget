@@ -1,12 +1,16 @@
 import requests as rq
 import json
 import datetime
+from getpass import getuser
 
 
 def getData(toVar):
 
+    user = getuser()
     try:
-        with open("tk.json", "r") as file:
+        with open(
+            f"C:\\Users\\{user}\\AppData\\Local\\ClickupWidget\\tk.json", "r"
+        ) as file:
             headers = json.load(file)
     except FileNotFoundError:
         print("Token File not found?")
